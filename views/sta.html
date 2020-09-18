@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./js/echarts.min.js"></script>
+    <script src="./js/getJson.js"></script>
+    <script src="./js/lodash-4.17.15.js"></script>
+    <script src="./js/chartConfig.js"></script>
+    <style>
+      .chart {
+        width: 1200px;
+        height: 600px;
+        border: 1px solid #aaa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chart chart1y"></div>
+    <div class="chart chart6m"></div>
+    <div class="chart chart3m"></div>
+  </body>
+
+  <script>
+    var { merge } = _;
+  </script>
+  <script>
+    var ops = merge({}, chartConfig);
+    getJson("./json/s1y.json").then((res) => {
+      var { title, list, step } = res;
+      var xAxis = [];
+      var series = [];
+      list.forEach((row) => {
+        xAxis.push(row.index * step);
+        series.push(row.count);
+      });
+
+      ops.title.text = title;
+      ops.xAxis.data = xAxis;
+      ops.series[0].data = series;
+      var myChart = echarts.init(document.querySelector(".chart1y"));
+      myChart.setOption(ops);
+    });
+  </script>
+  <script>
+    var ops = merge({}, chartConfig);
+    getJson("./json/s6m.json").then((res) => {
+      var { title, list, step } = res;
+      var xAxis = [];
+      var series = [];
+      list.forEach((row) => {
+        xAxis.push(row.index * step);
+        series.push(row.count);
+      });
+
+      ops.title.text = title;
+      ops.xAxis.data = xAxis;
+      ops.series[0].data = series;
+      var myChart = echarts.init(document.querySelector(".chart6m"));
+      myChart.setOption(ops);
+    });
+  </script>
+  <script>
+    var ops = merge({}, chartConfig);
+    getJson("./json/s3m.json").then((res) => {
+      var { title, list, step } = res;
+      var xAxis = [];
+      var series = [];
+      list.forEach((row) => {
+        xAxis.push(row.index * step);
+        series.push(row.count);
+      });
+
+      ops.title.text = title;
+      ops.xAxis.data = xAxis;
+      ops.series[0].data = series;
+      var myChart = echarts.init(document.querySelector(".chart3m"));
+      myChart.setOption(ops);
+    });
+  </script>
+</html>
